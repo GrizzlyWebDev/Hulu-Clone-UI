@@ -1,6 +1,21 @@
-module.exports = {
+const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["links.papareact.com", "image.tmdb.org"]
-  }
-}
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'image.tmdb.org',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'links.papareact.com',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
+};
+
+module.exports = nextConfig;
