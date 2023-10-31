@@ -1,23 +1,31 @@
+'use client';
 import Image from 'next/image';
 import { ThumbUpIcon } from '@heroicons/react/outline';
-import { forwardRef } from 'react';
+import { forwardRef, useState } from 'react';
+import ImgLoader from './ImgLoader';
 
 const Thumbnail = forwardRef(({ result }, ref) => {
+  const [loading, setLoading] = useState(true);
   const BASE_URL = 'https://image.tmdb.org/t/p/original/';
   return (
     <div
       ref={ref}
       className="w-full h-full p-2 transition duration-200 ease-in transform cursor-pointer group sm:hover:scale-105 hover:z-50"
     >
-      <Image
-        alt="movie poster image"
-        src={
-          `${BASE_URL}${result.backdrop_path || result.poster_path}` ||
-          `${BASE_URL}${result.poster_path}`
-        }
-        height={1080}
-        width={1920}
-      />
+      <div className="relative">
+        <Image
+          className="relative z-1"
+          alt="movie poster image"
+          src={
+            `${BASE_URL}${result.backdrop_path || result.poster_path}` ||
+            `${BASE_URL}${result.poster_path}`
+          }
+          onLoad={() => setLoading(false)}
+          height={1080}
+          width={1920}
+        />
+        {loading && <ImgLoader />}
+      </div>
       <div className="p-2">
         <h2 className="mt-1 text-2xl text-white transition-all duration-100 ease-in-out group-hover:font-semibold">
           {result.title || result.original_name}
